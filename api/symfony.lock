@@ -110,6 +110,15 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "sensio/framework-extra-bundle": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        }
+    },
     "symfony/cache": {
         "version": "v4.2.2"
     },
@@ -150,6 +159,9 @@
         "version": "v4.2.2"
     },
     "symfony/event-dispatcher": {
+        "version": "v4.2.2"
+    },
+    "symfony/expression-language": {
         "version": "v4.2.2"
     },
     "symfony/filesystem": {
@@ -223,15 +235,6 @@
             "version": "3.3",
             "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
         }
-    },
-    "symfony/security-core": {
-        "version": "v4.2.2"
-    },
-    "symfony/security-csrf": {
-        "version": "v4.2.2"
-    },
-    "symfony/security-guard": {
-        "version": "v4.2.2"
     },
     "symfony/security-http": {
         "version": "v4.2.2"

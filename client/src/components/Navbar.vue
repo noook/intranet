@@ -1,12 +1,12 @@
 <template>
   <div class="navbar" :class="{'full-screen': fullscreen}">
-    <router-link v-if="loggedAs" to="/tickets/new">{{ translations.NEW_TICKET }}</router-link>
     <router-link v-if="!loggedAs" to="/register">{{ translations.REGISTER }}</router-link>
     <router-link v-if="!loggedAs" to="/login">{{ translations.LOGIN }}</router-link>
-    <router-link v-if="loggedAs" to="/tickets">{{ translations.MY_TICKETS }}</router-link>
+
     <router-link
-      v-if="loggedAs && $store.state.GRADE === 'admin'"
-      to="/admin/users">{{ translations.MANAGE }}</router-link>
+      v-if="loggedAs && $store.getters.isAdmin"
+      to="/admin">{{ translations.MANAGE }}</router-link>
+
     <p v-if="loggedAs">{{ loggedAs }}</p>
     <a @click="logout" v-if="loggedAs">{{ translations.LOGOUT }}</a>
   </div>
@@ -22,15 +22,15 @@ export default {
   },
   computed: {
     loggedAs() {
-      const username = this.$store.state.USER || null;
+      const email = this.$store.state.USER || null;
       // debugger; // eslint-disable-line;
-      if (!username) {
+      if (!email) {
         return false;
       }
-      return this.translations.params('LOGGED_IN_AS', { username });
+      return this.translations.params('LOGGED_IN_AS', { email });
     },
     fullscreen() {
-      return ['register', 'login'].includes(this.$route.params.pathMatch);
+      return this.$route.name === 'authentication';
     },
   },
 };
