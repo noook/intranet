@@ -10,6 +10,18 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
   state: {
     AUTH_TOKEN: localStorage.getItem('AUTH_TOKEN') || null,
+    ROLES: [],
+  },
+  getters: {
+    isAdmin(state) {
+      return state.ROLES.includes('ROLE_ADMIN');
+    },
+    isTeacher(state) {
+      return state.ROLES.includes('ROLE_TEACHER');
+    },
+    isStudent(state) {
+      return state.ROLES.includes('ROLE_STUDENT');
+    },
   },
   mutations: {
     SET_TOKEN(state, data) {

@@ -27,7 +27,8 @@ class UserFixtures extends Fixture
             ->setEmail('benjamin.courtine@supinternet.fr')
             ->setFirstName('Benjamin')
             ->setLastName('Courtine')
-            ->setPassword('$argon2i$v=19$m=1024,t=2,p=2$SnNoZ0NVZHhMRjY3Zmx5cg$3vNa7WFPl01SBNZaMS8fTDqRIYeUvppPyptdlZ+ympA');
+            ->setPassword('$argon2i$v=19$m=1024,t=2,p=2$SnNoZ0NVZHhMRjY3Zmx5cg$3vNa7WFPl01SBNZaMS8fTDqRIYeUvppPyptdlZ+ympA')
+            ->setRoles(['ROLE_STUDENT']);
         
         $manager->persist($student);
 
@@ -37,7 +38,8 @@ class UserFixtures extends Fixture
             ->setEmail('neil.richter@supinternet.fr')
             ->setFirstName('Neil')
             ->setLastName('Richter')
-            ->setPassword('$argon2i$v=19$m=1024,t=2,p=2$RloySEVXZWhVTlNJV3Nsag$aL96OegeUeOuBgRViveacyKWMwT+INafQEwdWTlATsQ');
+            ->setPassword('$argon2i$v=19$m=1024,t=2,p=2$RloySEVXZWhVTlNJV3Nsag$aL96OegeUeOuBgRViveacyKWMwT+INafQEwdWTlATsQ')
+            ->setRoles(['ROLE_STUDENT']);
         
         $manager->persist($student);
 
