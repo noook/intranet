@@ -46,7 +46,6 @@ class Course
 
     public function repr(): Array
     {
-        dump($this->getParticipants());
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),

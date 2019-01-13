@@ -9,7 +9,7 @@
         <router-link to="/admin/students">{{ translations.LIST_STUDENTS }}</router-link>
       </li>
       <li>
-        <router-link to="/">{{ translations.LIST_TEACHERS }}</router-link>
+        <router-link to="/admin/teachers">{{ translations.LIST_TEACHERS }}</router-link>
       </li>
       <li>
         <router-link to="/admin/courses">{{ translations.LIST_COURSES }}</router-link>

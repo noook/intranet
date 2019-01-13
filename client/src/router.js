@@ -7,6 +7,8 @@ import Authentication from './views/Authentication.vue';
 import AdminPanel from './views/Admin/Admin.vue';
 import AdminUserList from './views/Admin/Users/List.vue';
 import AdminCoursesList from './views/Admin/Courses/List.vue';
+import AdminTeachersList from './views/Admin/Teachers/List.vue';
+import AdminStudentsList from './views/Admin/Students/List.vue';
 
 Vue.use(Router);
 
@@ -38,6 +40,16 @@ const router = new Router({
           path: 'courses',
           name: 'courses-list',
           component: AdminCoursesList,
+        },
+        {
+          path: 'teachers',
+          name: 'teachers-list',
+          component: AdminTeachersList,
+        },
+        {
+          path: 'students',
+          name: 'students-list',
+          component: AdminStudentsList,
         },
       ],
     },

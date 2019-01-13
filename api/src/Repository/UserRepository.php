@@ -6,6 +6,8 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
@@ -40,6 +42,50 @@ class UserRepository extends ServiceEntityRepository
             ++$i;
         }
         $em->flush();
+    }
+
+    private function findTeachersIds()
+    {
+        $userMapping = new ResultSetMapping;
+        $userMapping->addEntityResult(User::class, 'u');
+        $userMapping->addFieldResult('u', 'id', 'id');
+        $query = "SELECT id FROM \"user\" WHERE '\"ROLE_TEACHER\"' = ANY (ARRAY(select * from json_array_elements(roles))::text[]);";
+        $em = $this->getEntityManager();
+        $results = $em->createNativeQuery($query, $userMapping)->getResult();
+        $ids = array_map(function ($user) {
+            return $user->getId();
+        }, $results);
+        $em->clear();
+        
+        return $ids;
+    }
+
+    public function findTeachers()
+    {
+        $ids = array_values($this->findTeachersIds());
+        return $this->findBy(['id' => $ids], ['email' => 'ASC']);
+    }
+
+    private function findStudentsIds()
+    {
+        $userMapping = new ResultSetMapping;
+        $userMapping->addEntityResult(User::class, 'u');
+        $userMapping->addFieldResult('u', 'id', 'id');
+        $query = "SELECT id FROM \"user\" WHERE '\"ROLE_STUDENT\"' = ANY (ARRAY(select * from json_array_elements(roles))::text[]);";
+        $em = $this->getEntityManager();
+        $results = $em->createNativeQuery($query, $userMapping)->getResult();
+        $ids = array_map(function ($user) {
+            return $user->getId();
+        }, $results);
+        $em->clear();
+
+        return $ids;
+    }
+
+    public function findStudents()
+    {
+        $ids = array_values($this->findStudentsIds());
+        return $this->findBy(['id' => $ids], ['email' => 'ASC']);
     }
 
     // /**

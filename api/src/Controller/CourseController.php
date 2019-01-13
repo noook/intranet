@@ -27,6 +27,5 @@ class CourseController extends AbstractController
         return $this->json([
             'courses' => $courses,
         ]);
-
     }
 }
