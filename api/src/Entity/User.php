@@ -51,9 +51,38 @@ class User implements UserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Course", mappedBy="teacher")
+     */
+    private $classes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Course", mappedBy="participants")
+     */
+    private $courses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Grade", mappedBy="student", orphanRemoval=true)
+     */
+    private $grades;
+
     public function __construct()
     {
         $this->tokens = new ArrayCollection();
+        $this->classes = new ArrayCollection();
+        $this->courses = new ArrayCollection();
+        $this->grades = new ArrayCollection();
+    }
+
+    public function repr(): Array
+    {
+        return [
+            'id' => $this->getId(),
+            'first-name' => $this->getFirstName(),
+            'last-name' => $this->getLastName(),
+            'email' => $this->getEmail(),
+            'roles' => $this->getRoles(),
+        ];
     }
 
     public function getId(): ?int
@@ -183,6 +212,96 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getClasses(): Collection
+    {
+        return $this->classes;
+    }
+
+    public function addClass(Course $class): self
+    {
+        if (!$this->classes->contains($class)) {
+            $this->classes[] = $class;
+            $class->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClass(Course $class): self
+    {
+        if ($this->classes->contains($class)) {
+            $this->classes->removeElement($class);
+            // set the owning side to null (unless already changed)
+            if ($class->getTeacher() === $this) {
+                $class->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses[] = $course;
+            $course->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        if ($this->courses->contains($course)) {
+            $this->courses->removeElement($course);
+            $course->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Grade[]
+     */
+    public function getGrades(): Collection
+    {
+        return $this->grades;
+    }
+
+    public function addGrade(Grade $grade): self
+    {
+        if (!$this->grades->contains($grade)) {
+            $this->grades[] = $grade;
+            $grade->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGrade(Grade $grade): self
+    {
+        if ($this->grades->contains($grade)) {
+            $this->grades->removeElement($grade);
+            // set the owning side to null (unless already changed)
+            if ($grade->getStudent() === $this) {
+                $grade->setStudent(null);
+            }
+        }
 
         return $this;
     }

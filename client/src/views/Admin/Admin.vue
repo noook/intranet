@@ -12,7 +12,7 @@
         <router-link to="/">{{ translations.LIST_TEACHERS }}</router-link>
       </li>
       <li>
-        <router-link to="/">{{ translations.LIST_COURSES }}</router-link>
+        <router-link to="/admin/courses">{{ translations.LIST_COURSES }}</router-link>
       </li>
     </ul>
     <section>
@@ -48,6 +48,7 @@ export default {
 
           &.router-link-exact-active {
             text-decoration: underline;
+            font-weight: 500;
           }
 
           &:hover {

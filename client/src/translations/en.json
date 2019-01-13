@@ -25,6 +25,8 @@
     "LOGIN": "Login",
     "LOGOUT": "Logout",
     "MANAGE": "Manage",
+    "NAME": "Name",
+    "PARTICIPANTS": "Participants",
     "REGISTER": "Register",
     "ROLE": "Role",
     "ROLE_ADMIN": "Admin",
@@ -33,5 +35,6 @@
     "SAVE": "Save",
     "SAVED": "Saved",
     "SUBMIT_FORM": "Submit",
+    "TEACHER": "Teacher",
     "USERS": "Users"
 }

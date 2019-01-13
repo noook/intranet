@@ -42,6 +42,28 @@ class UserFixtures extends Fixture
             ->setRoles(['ROLE_STUDENT']);
         
         $manager->persist($student);
+        
+        $teacher = new User;
+        
+        $teacher
+            ->setEmail('cyril.teixeira@supinternet.fr')
+            ->setFirstName('Cyril')
+            ->setLastName('Teixeira')
+            ->setPassword($this->passwordEncoder->encodePassword($teacher, 'kebab'))
+            ->setRoles(['ROLE_TEACHER']);
+        
+        $manager->persist($teacher);
+
+        $teacher = new User;
+        
+        $teacher
+            ->setEmail('clement.seiller@supinternet.fr')
+            ->setFirstName('Clément')
+            ->setLastName('Seiller')
+            ->setPassword($this->passwordEncoder->encodePassword($teacher, 'kenny'))
+            ->setRoles(['ROLE_TEACHER']);
+        
+        $manager->persist($teacher);
 
         $admin = new User;
 
@@ -56,7 +78,7 @@ class UserFixtures extends Fixture
 
         $client = new \GuzzleHttp\Client();
 
-        for($i = 0; $i < 20; ++$i) {
+        for($i = 0; $i < 10; ++$i) {
             $request = $client->request('GET', 'https://randomuser.me/api/?nat=us,nl,fr');
             $data = json_decode($request->getBody(), true);
             $data = $data['results'][0];

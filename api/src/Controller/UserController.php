@@ -20,13 +20,7 @@ class UserController extends AbstractController
         $users = [];
 
         foreach($userRepository->findBy([], ['email' => 'ASC']) as $user) {
-            $users[] = [
-                'id' => $user->getId(),
-                'first-name' => $user->getFirstName(),
-                'last-name' => $user->getLastName(),
-                'email' => $user->getEmail(),
-                'roles' => $user->getRoles(),
-            ];
+            $users[] = $user->repr();
         }
 
         return $this->json([

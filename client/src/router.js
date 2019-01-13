@@ -6,6 +6,7 @@ import Home from './views/Home.vue';
 import Authentication from './views/Authentication.vue';
 import AdminPanel from './views/Admin/Admin.vue';
 import AdminUserList from './views/Admin/Users/List.vue';
+import AdminCoursesList from './views/Admin/Courses/List.vue';
 
 Vue.use(Router);
 
@@ -32,6 +33,11 @@ const router = new Router({
           path: 'users',
           name: 'users-list',
           component: AdminUserList,
+        },
+        {
+          path: 'courses',
+          name: 'courses-list',
+          component: AdminCoursesList,
         },
       ],
     },

@@ -50,7 +50,7 @@ export default {
       margin: 0 10px;
       color: #a537fd;
 
-      &.router-link-exact-active {
+      &.router-link-active {
         text-decoration: underline;
       }
 
