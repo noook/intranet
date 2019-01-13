@@ -30,10 +30,10 @@ api.interceptors.response.use(
 
 export default api;
 
-export function checkConnexion() {
+export function checkConnection() {
   return new Promise((resolve, reject) => api.get('/user/check-connection', {
     headers: {
-      'X-AUTH-TOKEN': store.state.AUTH_TOKEN || null,
+      'X-AUTH-TOKEN': store.state.AUTH_TOKEN || '',
     },
   })
     .then(response => {
@@ -41,7 +41,6 @@ export function checkConnexion() {
       if (response.headers['x-refreshed-token']) {
         store.dispatch('setToken', {
           token: response.headers['x-refreshed-token'],
-          expiracy: response.headers['x-token-expiracy'],
         });
       }
       resolve();

@@ -7,6 +7,8 @@
     "ERROR_PASSWORDS_NO_MATCH": "Passwords do not match",
     "ERROR_USERNAME_TAKEN": "Username already in use",
     "FORM_EMAIL": "Email",
+    "FORM_FIRST_NAME": "First name",
+    "FORM_LAST_NAME": "Last name",
     "FORM_PASSWORD": "Password",
     "FORM_PASSWORD_REPEAT": "Password repeat",
     "FORM_USERNAME": "Username",

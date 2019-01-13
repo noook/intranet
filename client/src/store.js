@@ -17,8 +17,8 @@ export default new Vuex.Store({
       localStorage.setItem('AUTH_TOKEN', data.token);
     },
     SET_USER(state, data) {
-      Vue.set(state, 'USER', data.username);
-      Vue.set(state, 'GRADE', data.grade);
+      Vue.set(state, 'USER', data.user.email);
+      Vue.set(state, 'ROLES', data.user.roles);
     },
     LOGOUT(state) {
       Vue.delete(state, 'AUTH_TOKEN');

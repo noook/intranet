@@ -47,20 +47,15 @@ class TokenHandler {
         return $token;
     }
 
-    // public function refreshToken($token)
-    // {
-    //     $user = $this->em->getRepository(Token::class)->findOneBy([
-    //         'token' => $token
-    //     ]);
-    //     if (is_null($user)) {
-    //         return 401;
-    //     }
-    //     $newToken = $this->generate();
-    //     $user->setApiToken($newToken);
-    //     $now = new \DateTime();
-    //     $user->setTokenExpiracy($now->add(new \DateInterval('P1D')));
-    //     $this->em->flush();
+    public function refreshToken(Token $token): void
+    {
+        $user = $token->getOwner();
 
-    //     return $newToken;
-    // }
+        $token->setToken($this->generate());
+
+        $now = new \DateTime();
+        $token->setExpiracy($now->add(new \DateInterval('P1D')));
+        
+        $this->em->flush();
+    }
 }

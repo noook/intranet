@@ -5,14 +5,18 @@
       <div class="login-inputs">
         <input
           type="text"
-          v-model="form.username"
-          name="username"
-          :placeholder="translations.FORM_USERNAME">
-        <small v-if="registerError.username">{{ translations.ERROR_USERNAME_TAKEN }}</small>
+          v-model="form.firstName"
+          name="first-name"
+          :placeholder="translations.FORM_FIRST_NAME">
+        <input
+          type="text"
+          v-model="form.lastName"
+          name="last-name"
+          :placeholder="translations.FORM_LAST_NAME">
         <input
           type="email"
           v-model="form.email"
-          name="username"
+          name="email"
           :placeholder="translations.FORM_EMAIL">
         <small v-if="registerError.email">{{ translations.ERROR_EMAIL_TAKEN }}</small>
         <input
@@ -41,13 +45,13 @@ export default {
   data() {
     return {
       form: {
-        username: null,
+        firstName: null,
+        lastName: null,
         email: null,
         password: null,
         passwordConfirmation: null,
       },
       registerError: {
-        username: false,
         email: false,
         password: false,
       },
@@ -59,7 +63,8 @@ export default {
         this.registerError[i] = false;
       }
       const {
-        username,
+        firstName,
+        lastName,
         email,
         password,
         passwordConfirmation,
@@ -67,7 +72,8 @@ export default {
 
       const baseUrl = process.env.NODE_ENV === 'development' ? 'http://intranet.ml' : 'https://api.intranet.nook.sh';
       const { token, expiracy } = await axios.post(`${baseUrl}/register`, {
-        username,
+        firstName,
+        lastName,
         email,
         password,
         passwordConfirmation,
@@ -79,7 +85,7 @@ export default {
           }
         });
       this.$store.dispatch('setToken', { token, expiracy });
-      this.$router.push('/tickets');
+      this.$router.push('/');
     },
   },
 };

@@ -3,7 +3,7 @@
     <Navbar />
     <div class="router-view" :class="{'full-screen': fullscreen}">
       <transition>
-        <router-view />
+        <router-view :key="$route.path"/>
       </transition>
     </div>
   </div>
