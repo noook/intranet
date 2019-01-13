@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $student = new User();
+        $student = new User;
         
         $student
             ->setEmail('benjamin.courtine@supinternet.fr')
@@ -32,7 +32,7 @@ class UserFixtures extends Fixture
         
         $manager->persist($student);
 
-        $student = new User();
+        $student = new User;
         
         $student
             ->setEmail('neil.richter@supinternet.fr')
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
         
         $manager->persist($student);
 
-        $admin = new User();
+        $admin = new User;
 
         $admin
             ->setEmail('john.bob@supinternet.fr')
@@ -53,6 +53,22 @@ class UserFixtures extends Fixture
             ->setPassword($this->passwordEncoder->encodePassword($admin, 'admin'));
 
         $manager->persist($admin);
+
+        $client = new \GuzzleHttp\Client();
+
+        for($i = 0; $i < 20; ++$i) {
+            $request = $client->request('GET', 'https://randomuser.me/api/?nat=us,nl,fr');
+            $data = json_decode($request->getBody(), true);
+            $data = $data['results'][0];
+            $user = new User;
+            $user
+                ->setEmail(explode('@', $data['email'])[0] . '@supinternet.fr')
+                ->setFirstName(ucfirst($data['name']['first']))
+                ->setLastName(ucfirst($data['name']['last']))
+                ->setPassword($this->passwordEncoder->encodePassword($user, 'random'))
+                ->setRoles(['ROLE_STUDENT']);
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }
