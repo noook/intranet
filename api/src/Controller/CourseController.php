@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use App\Entity\Course;
 
 use App\Repository\CourseRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class CourseController extends AbstractController
 {
@@ -74,5 +76,28 @@ class CourseController extends AbstractController
             'participating' => $participating,
             'grades' => $grades,
         ]);
+
+    }
+    
+    /**
+     * @Route("/courses/new", name="new-course", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function newCourse(Request $request, ObjectManager $em)
+    {
+        $name = json_decode($request->getContent(), true)['name'];
+        $course = new Course;
+        $course
+            ->setName($name);
+        
+        $em->persist($course);
+        $em->flush();
+
+        return $this->json([
+            'course' => [
+                'id' => $course->getId(),
+                'name' => $course->getName(),
+            ],
+        ], 201);
     }
 }

@@ -10,11 +10,14 @@
           <td>{{ translations.CLASSES }}</td>
         </tr>
       </thead>
-      <tr v-for="(students, index) in students" :key="index">
-        <td>{{ students.id }}</td>
-        <td>{{ `${students['first-name']} ${students['last-name']}` }}</td>
-        <td>{{ students.email }}</td>
-        <td>{{ students.courses }}</td>
+      <tr
+        @click="goToStudent(student.id)"
+        v-for="(student, index) in students"
+        :key="index">
+        <td>{{ student.id }}</td>
+        <td>{{ `${student['first-name']} ${student['last-name']}` }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.courses }}</td>
       </tr>
     </table>
   </div>
@@ -34,6 +37,16 @@ export default {
       .catch(err => console.log(err)); // eslint-disable-line
 
     this.students = students;
+  },
+  methods: {
+    goToStudent(id) {
+      this.$router.push({
+        name: 'student-detail',
+        params: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>
