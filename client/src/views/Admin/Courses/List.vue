@@ -1,5 +1,9 @@
 <template>
   <div class="courses-list">
+    <router-link
+      class="add-course-btn"
+      to="/admin/courses/new">{{ translations.NEW_COURSE }}
+    </router-link>
     <div class="header"></div>
     <table>
       <thead>
@@ -32,6 +36,16 @@ export default {
       .catch(err => console.log(err)); // eslint-disable-line
 
     this.courses = courses;
+  },
+  methods: {
+    goToStudent(id) {
+      this.$router.push({
+        name: 'student-detail',
+        params: {
+          id,
+        },
+      });
+    },
   },
 };
 </script>
@@ -81,5 +95,17 @@ export default {
         }
       }
     }
+  }
+  .add-course-btn {
+        display: inline;
+        margin: 10px 0;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-right: 15px;
+        background-color: rgba($flatGreen, .9);
+        color: #fff;
+        &:hover {
+          cursor: pointer;
+        }
   }
 </style>
