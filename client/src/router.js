@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store';
 import { checkConnection } from './utils/api';
 
 import Home from './views/Home.vue';
@@ -9,6 +10,9 @@ import AdminUserList from './views/Admin/Users/List.vue';
 import AdminCoursesList from './views/Admin/Courses/List.vue';
 import AdminTeachersList from './views/Admin/Teachers/List.vue';
 import AdminStudentsList from './views/Admin/Students/List.vue';
+
+import CoursesList from './views/Courses/List.vue';
+import CourseDetail from './views/Courses/Detail.vue';
 
 Vue.use(Router);
 
@@ -27,6 +31,28 @@ const router = new Router({
       component: Authentication,
     },
     {
+      path: '/courses',
+      name: 'courses',
+      component: CoursesList,
+      beforeEnter(to, from, next) {
+        if (store.getters.isAdmin) {
+          next('/admin/courses');
+        }
+        next();
+      },
+    },
+    {
+      path: '/courses/:id',
+      name: 'course-detail',
+      component: CourseDetail,
+      beforeEnter(to, from, next) {
+        if (store.getters.isAdmin) {
+          // next('/admin/courses/:id'); // handle later
+        }
+        next();
+      },
+    },
+    {
       path: '/admin',
       name: 'admin-panel',
       component: AdminPanel,
@@ -38,7 +64,7 @@ const router = new Router({
         },
         {
           path: 'courses',
-          name: 'courses-list',
+          name: 'courses-list-admin',
           component: AdminCoursesList,
         },
         {

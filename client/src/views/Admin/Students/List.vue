@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <td>{{ translations.ID }}</td>
-          <td>{{ translations.TEACHER }}</td>
+          <td>{{ translations.FULL_NAME }}</td>
           <td>{{ translations.FORM_EMAIL }}</td>
           <td>{{ translations.CLASSES }}</td>
         </tr>

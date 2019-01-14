@@ -10,6 +10,7 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
   state: {
     AUTH_TOKEN: localStorage.getItem('AUTH_TOKEN') || null,
+    USER: localStorage.getItem('USER') || null,
     ROLES: [],
   },
   getters: {
@@ -29,6 +30,7 @@ export default new Vuex.Store({
       localStorage.setItem('AUTH_TOKEN', data.token);
     },
     SET_USER(state, data) {
+      localStorage.setItem('USER', data.user.email);
       Vue.set(state, 'USER', data.user.email);
       Vue.set(state, 'ROLES', data.user.roles);
     },
@@ -36,6 +38,7 @@ export default new Vuex.Store({
       Vue.delete(state, 'AUTH_TOKEN');
       Vue.delete(state, 'USER');
       localStorage.removeItem('AUTH_TOKEN');
+      localStorage.removeItem('USER');
     },
   },
   actions: {
