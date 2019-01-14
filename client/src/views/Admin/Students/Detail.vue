@@ -1,9 +1,9 @@
 <template>
-    <div class="admin-student-detail">
-              <div v-for="(user, index) in users" :key="index">
-                  {{ fullName(user) }}
-              </div>
+  <div class="admin-student-detail">
+    <div v-for="(user, index) in users" :key="index">
+      {{ fullName(user) }}
     </div>
+  </div>
 </template>
 
 <script>

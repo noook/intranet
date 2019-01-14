@@ -1,11 +1,12 @@
 <template>
-    <div class="new-course">
-        <form @submit.prevent="submit" >
-            <label for="">{{ translations.COURSE_NAME }}</label>
-            <input v-model="name" type="text">
-            <div @click="submit">{{ translations.NEW_COURSE }}</div>
-        </form>
-    </div>
+  <div class="new-course">
+    <h2>{{ translations.NEW_COURSE }}</h2>
+    <form @submit.prevent="submit" >
+      <label for="course-name">{{ translations.COURSE_NAME }}:</label>
+      <input id="course-name" v-model="name" type="text">
+      <div @click="submit">{{ translations.ADD_COURSE }}</div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -29,34 +30,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .new-course {
-        > form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            > label, input, div {
-                margin-top: 30px;
-            }
-            > input[type="text"] {
-                all: inherit;
-                border-radius: 20px;
-                background-color: #f5f5f5;
-                padding: 5px 20px;
-                margin: 5px 0;
-                text-align: left;
-                margin-top: 20px;
-            }
-            > div {
-                display: inline;
-                border-radius: 5px;
-                padding: 5px 10px;
-                background-color: rgba(46, 204, 113, 0.9);
-                color: #fff;
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-        }
+  .new-course {
+
+    > h2 {
+      font-size: 1.5rem;
+      text-align: left;
     }
+    > form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      > label, input, div {
+        margin: 10px 0;
+      }
+      > input[type="text"] {
+        all: inherit;
+        border-radius: 5px;
+        border: solid 1px rgba($flatBlack, .4);
+        padding: 5px 10px;
+        text-align: left;
+      }
+      > div {
+        border-radius: 5px;
+        padding: 5px 10px;
+        background-color: rgba($flatGreen, 0.9);
+        color: #fff;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
 </style>
