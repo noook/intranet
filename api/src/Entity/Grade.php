@@ -38,6 +38,16 @@ class Grade
      */
     private $comment;
 
+    public function repr(): Array
+    {
+        return [
+            'id' => $this->getId(),
+            'value' => $this->getValue(),
+            'student' => $this->getStudent()->repr(),
+            'comment' => $this->getComment(),
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
