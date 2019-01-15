@@ -12,9 +12,9 @@ import AdminTeachersList from './views/Admin/Teachers/List.vue';
 import AdminStudentDetail from './views/Admin/Students/Detail.vue';
 import AdminStudentsList from './views/Admin/Students/List.vue';
 import AdminCoursesNew from './views/Admin/Courses/New.vue';
+import AdminCourseDetail from './views/Admin/Courses/Detail.vue';
 
 import CoursesList from './views/Courses/List.vue';
-import CourseDetail from './views/Courses/Detail.vue';
 
 Vue.use(Router);
 
@@ -44,17 +44,6 @@ const router = new Router({
       },
     },
     {
-      path: '/courses/:id',
-      name: 'course-detail',
-      component: CourseDetail,
-      beforeEnter(to, from, next) {
-        if (store.getters.isAdmin) {
-          // next('/admin/courses/:id'); // handle later
-        }
-        next();
-      },
-    },
-    {
       path: '/admin',
       name: 'admin-panel',
       component: AdminPanel,
@@ -68,6 +57,11 @@ const router = new Router({
           path: 'courses',
           name: 'courses-list-admin',
           component: AdminCoursesList,
+        },
+        {
+          path: 'courses/:id',
+          name: 'course-detail',
+          component: AdminCourseDetail,
         },
         {
           path: 'courses/new',
