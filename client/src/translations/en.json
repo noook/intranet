@@ -1,6 +1,8 @@
 {
     "ADD_COURSE": "Add course",
     "ADMIN_PANEL": "Admin panel",
+    "ASSIGN": "Assign",
+    "ASSIGN_A_TEACHER": "Assign a teacher",
     "CANCEL": "Cancel",
     "CLASSES": "Classes",
     "COMMENT": "Comment",
@@ -37,6 +39,7 @@
     "MANAGE": "Manage",
     "NAME": "Name",
     "NEW_COURSE": "New course",
+    "NONE_YET": "None yet",
     "PARTICIPANTS": "Participants",
     "PARTICIPATING": "Participating",
     "REGISTER": "Register",

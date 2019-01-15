@@ -22,7 +22,14 @@ export default {
       this.$api.post('/courses/new', {
         name: this.name,
       })
-        .then(({ data }) => data)
+        .then(({ data }) => {
+          this.$router.push({
+            name: 'course-detail',
+            params: {
+              id: data.id,
+            },
+          });
+        })
         .catch(err => console.log(err)); // eslint-disable-line
     },
   },

@@ -17,7 +17,10 @@
           {{ course.name }}
           <span v-show="course.assigned">{{ translations.PARTICIPATING }}</span>
         </td>
-        <td v-if="showTeacher">{{ fullName(course.teacher) }}</td>
+        <td v-if="showTeacher">
+          <span v-if="course.teacher">{{ fullName(course.teacher) }}</span>
+          <b v-else>{{ translations.NONE_YET }}</b>
+        </td>
         <td>{{ course.count }}</td>
         <td class="center" v-if="$store.getters.isStudent">
           <div class="button"

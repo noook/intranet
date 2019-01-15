@@ -1,16 +1,24 @@
 <template>
   <div class="user-search">
-    <h3>{{ translations.ADD_PARTICIPANTS }}:</h3>
-    <div class="search-box">
-      <input
-        type="text"
-        v-model="query">
-      <div v-if="query != ''" >
-        <p v-for="(user, index) in queryResults" :key="index">
-          {{ user.username }}
-          <span @click="addParticipant(user.id)">+</span>
-        </p>
+    <div class="input">
+      <img
+        @click="$emit('close')"
+        src="@/assets/svg/close-red.svg"
+        alt="close">
+      <input v-model="query" type="text">
+      <div
+        @click="selected = result"
+        class="results"
+        :class="{ selected: selected === result }"
+        v-for="(result, index) in queryResults" :key="index">
+          {{ fullName(result) }}
       </div>
+    </div>
+    <div
+      @click="$emit('select', selected)"
+      class="validate"
+      :class="{ clickable: selected !== null }">
+      {{ translations.ASSIGN }}
     </div>
   </div>
 </template>
@@ -20,39 +28,37 @@ import { debounce } from 'lodash';
 
 export default {
   name: 'UserSearch',
-  props: ['participants'],
   data() {
     return {
+      selected: null,
       query: null,
       queryResults: [],
     };
+  },
+  props: {
+    type: {
+      type: String,
+      default: 'all',
+    },
   },
   created() {
     this.debouncedSearch = debounce(this.searchUser, 300);
   },
   methods: {
     async searchUser() {
-      let queryResults = await this.$api.get('/users/search', {
+      const { teachers } = await this.$api.get('/users/search', {
         params: {
           query: this.query,
+          type: this.type,
         },
       })
-        .then(response => response.data.users)
+        .then(({ data }) => data)
         .catch(err => console.log(err)); // eslint-disable-line
-      const { participants } = this;
-      const ticketAuthor = this.$parent.ticket.author;
-      queryResults = queryResults
-        .filter(user => !participants.includes(user.username) && user.username !== ticketAuthor);
-      this.queryResults = queryResults;
+
+      this.queryResults = teachers;
     },
-    async addParticipant(id) {
-      const { participant } = await this.$api.post(`/tickets/${this.$parent.$route.params.id}/add-participant`, {
-        participant: id,
-      })
-        .then(response => response.data)
-        .catch(err => console.log(err)); // eslint-disable-line
-      this.participants.push(participant);
-      this.query = '';
+    fullName(user) {
+      return `${user['first-name']} ${user['last-name']}`;
     },
   },
   watch: {
@@ -67,44 +73,56 @@ export default {
 
 <style lang="scss" scoped>
   .user-search {
-    margin: 10px 0;
-    > h3 {
-      text-align: left;
-      display: block;
-      font-size: 1.3rem;
-    }
-    > .search-box {
-      margin: 5px 0;
-      @include d-flex-centered(flex-start);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-      > input {
-        margin-right: 15px;
-        border-radius: 5px;
-        border: solid 1px rgba($flatBlack, .5);
-        padding: 3px 10px;
-        font-family: $defaultFont;
-        font-size: 1rem;
+    > .input {
+      @include d-flex-centered(flex-start);
+      margin: 10px 5px;
+
+      > img {
+        width: 12px;
+        height: 12px;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
 
-      > div {
-        display: flex;
+      > input {
+        font-family: $defaultFont;
+        font-size: 1rem;
+        margin: 0 10px;
+        border-radius: 5px;
+        border: inherit;
+        border: solid 1px rgba($flatBlack, .5);
+        padding: 5px 10px;
+      }
 
-        > p {
-          padding: 2px 10px;
-          margin: 0 5px;
-          border-radius: 5px;
-          border: solid 1px rgba($flatBlack, .5);
+      > .results {
+        margin: 0 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: solid 1px rgba($flatBlack, .5);
 
-          > span {
-            margin-left: 10px;
-            color: $flatBlue;
-            // font-size: 1.2rem;
-            font-weight: bold;
+        &.selected {
+          background-color: rgba($flatGreen, .7);
+          color: #fff;
+        }
+      }
+    }
 
-            &:hover {
-              cursor: pointer;
-            }
-          }
+    > .validate {
+      background-color: rgba($flatBlack, .2);
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: #fff;
+
+      &.clickable {
+        background-color: rgba($flatGreen, .9);
+        &:hover {
+          cursor: pointer;
         }
       }
     }
