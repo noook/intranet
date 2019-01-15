@@ -82,8 +82,6 @@ export default {
 
 <style lang="scss" scoped>
   .course-detail {
-    width: 80%;
-    margin: auto;
 
     > h1 {
       font-size: 2rem;

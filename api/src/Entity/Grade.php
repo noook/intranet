@@ -43,6 +43,7 @@ class Grade
         return [
             'id' => $this->getId(),
             'value' => $this->getValue(),
+            'course' => $this->getCourse()->repr(),
             'student' => $this->getStudent()->repr(),
             'comment' => $this->getComment(),
         ];

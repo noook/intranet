@@ -6,8 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+
+use App\Repository\UserRepository;
+use App\Entity\User;
 
 class UserController extends AbstractController
 {
@@ -73,5 +76,29 @@ class UserController extends AbstractController
         $userRepository->updateRoles($data);
 
         return $this->json([], 204);
+    }
+
+    /**
+     * @Route("/users/{id}", name="student-detail", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_TEACHER')")
+     */
+    public function getStudent(User $student)
+    {
+        $grades = [];
+        $courses = [];
+
+        foreach ($student->getGrades() as $grade) {
+            $grades[] = $grade->repr();
+        }
+
+        foreach ($student->getCourses() as $course) {
+            $courses[] = $course->repr();
+        }
+
+        return $this->json([
+            'student' => $student->repr(),
+            'grades' => $grades,
+            'courses' => $courses,
+        ]);
     }
 }
