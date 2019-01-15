@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tr
-        @click="$router.push({ name: 'course-detail', params: {id: course.id}})"
+        @click="goToCourse(course)"
         v-for="(course, index) in courses"
         :key="index">
         <td class="first">{{ course.name }}
@@ -37,6 +37,18 @@ export default {
       .catch(err => console.log(err)); // eslint-disable-line
 
     this.courses = courses;
+  },
+  methods: {
+    goToCourse(course) {
+      if (!this.$store.getters.isStudent) {
+        this.$router.push({
+          name: 'course-detail',
+          params: {
+            id: course.id,
+          },
+        });
+      }
+    },
   },
 };
 </script>
