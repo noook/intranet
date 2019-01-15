@@ -15,7 +15,7 @@
       </div>
     </div>
     <div
-      @click="$emit('select', selected)"
+      @click="sendChoice"
       class="validate"
       :class="{ clickable: selected !== null }">
       {{ translations.ASSIGN }}
@@ -56,6 +56,11 @@ export default {
         .catch(err => console.log(err)); // eslint-disable-line
 
       this.queryResults = teachers;
+    },
+    sendChoice() {
+      if (this.selected) {
+        this.$emit('select', this.selected);
+      }
     },
     fullName(user) {
       return `${user['first-name']} ${user['last-name']}`;
