@@ -63,14 +63,14 @@ const router = new Router({
           component: AdminCoursesList,
         },
         {
-          path: 'courses/:id',
-          name: 'course-detail',
-          component: AdminCourseDetail,
-        },
-        {
           path: 'courses/new',
           name: 'new-course',
           component: AdminCoursesNew,
+        },
+        {
+          path: 'courses/:id',
+          name: 'course-detail',
+          component: AdminCourseDetail,
         },
         {
           path: 'teachers',
