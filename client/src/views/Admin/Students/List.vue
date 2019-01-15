@@ -1,31 +1,18 @@
 <template>
   <div class="students-list">
     <div class="header"></div>
-    <table>
-      <thead>
-        <tr>
-          <td>{{ translations.ID }}</td>
-          <td>{{ translations.FULL_NAME }}</td>
-          <td>{{ translations.FORM_EMAIL }}</td>
-          <td>{{ translations.CLASSES }}</td>
-        </tr>
-      </thead>
-      <tr
-        @click="goToStudent(student.id)"
-        v-for="(student, index) in students"
-        :key="index">
-        <td>{{ student.id }}</td>
-        <td>{{ `${student['first-name']} ${student['last-name']}` }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.courses }}</td>
-      </tr>
-    </table>
+    <StudentList :students="students" />
   </div>
 </template>
 
 <script>
+import StudentList from '@/components/Student/List.vue';
+
 export default {
-  name: 'StudentsList',
+  name: 'AdminStudentsList',
+  components: {
+    StudentList,
+  },
   data() {
     return {
       students: [],
@@ -38,16 +25,7 @@ export default {
 
     this.students = students;
   },
-  methods: {
-    goToStudent(id) {
-      this.$router.push({
-        name: 'student-detail',
-        params: {
-          id,
-        },
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

@@ -97,7 +97,11 @@ hr {
     }
 
     td {
-      padding: 10px 30px
+      padding: 10px 30px;
+
+      &.center {
+        @include d-flex-centered(center);
+      }
     }
 
     > tr {
@@ -125,10 +129,6 @@ hr {
           }
         }
         text-align: left;
-
-        &.center {
-          @include d-flex-centered(center);
-        }
       }
     }
   }

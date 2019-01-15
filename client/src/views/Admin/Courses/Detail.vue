@@ -17,20 +17,9 @@
             :class="{active: tab === 'grades'}">{{ translations.GRADES }}</li>
         </ul>
       </div>
-      <table v-if="tab === 'students'">
-        <thead>
-          <tr>
-            <td>{{ translations.ID }}</td>
-            <td>{{ translations.FULL_NAME }}</td>
-            <td>{{ translations.FORM_EMAIL }}</td>
-          </tr>
-        </thead>
-        <tr v-for="(student, index) in participating" :key="index">
-          <td>{{ student.id }}</td>
-          <td>{{ `${student['first-name']} ${student['last-name']}` }}</td>
-          <td>{{ student.email }}</td>
-        </tr>
-      </table>
+      <StudentList
+        :students="participating"
+        v-if="tab === 'students'"/>
       <table v-if="tab === 'grades'">
         <thead>
           <tr>
@@ -51,8 +40,13 @@
 </template>
 
 <script>
+import StudentList from '@/components/Student/List.vue';
+
 export default {
   name: 'CourseDetail',
+  components: {
+    StudentList,
+  },
   data() {
     return {
       loaded: false,

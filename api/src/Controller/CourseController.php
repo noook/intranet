@@ -54,30 +54,27 @@ class CourseController extends AbstractController
     }
 
     /**
-     * @Route("/courses/{id}", name="course-detail", methods={"GET"})
+     * @Route("/students/courses/participating/{id}", name="student-course-edit", methods={"PUT"})
      * @ParamConverter("course", class="App\Entity\Course")
      * @IsGranted("ROLE_STUDENT")
      */
-    public function courseDetail(Course $course)
+    public function updateStudentParticipating(Course $course, ObjectManager $em)
     {
-        $participating = [];
-        $grades = [];
+        $user = $this->getUser();
 
-        foreach ($course->getParticipants() as $participant) {
-            $participating[] = $participant->repr();
+        if ($user->getCourses()->contains($course)) {
+            $user->removeCourse($course);
+        } else {
+            $user->addCourse($course);
         }
-
-        foreach ($course->getGrades() as $grade) {
-            $grades[] = $grade->repr();
-        }
+        $em->flush();
 
         return $this->json([
-            'course' => $course->repr(),
-            'participating' => $participating,
-            'grades' => $grades,
+            'enrolled' => $user->getCourses()->contains($course),
+            'updated' => $course->repr(),
         ]);
-
     }
+
     
     /**
      * @Route("/courses/new", name="new-course", methods={"POST"})
@@ -88,16 +85,41 @@ class CourseController extends AbstractController
         $name = json_decode($request->getContent(), true)['name'];
         $course = new Course;
         $course
-            ->setName($name);
+        ->setName($name);
         
         $em->persist($course);
         $em->flush();
-
+        
         return $this->json([
             'course' => [
                 'id' => $course->getId(),
                 'name' => $course->getName(),
             ],
         ], 201);
+    }
+
+    /**
+     * @Route("/courses/{id}", name="course-detail", methods={"GET"})
+     * @ParamConverter("course", class="App\Entity\Course")
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function courseDetail(Course $course)
+    {
+        $participating = [];
+        $grades = [];
+    
+        foreach ($course->getParticipants() as $participant) {
+            $participating[] = $participant->repr();
+        }
+    
+        foreach ($course->getGrades() as $grade) {
+            $grades[] = $grade->repr();
+        }
+    
+        return $this->json([
+            'course' => $course->repr(),
+            'participating' => $participating,
+            'grades' => $grades,
+        ]);
     }
 }

@@ -7,10 +7,14 @@ import Home from './views/Home.vue';
 import Authentication from './views/Authentication.vue';
 import AdminPanel from './views/Admin/Admin.vue';
 import AdminUserList from './views/Admin/Users/List.vue';
-import AdminCoursesList from './views/Admin/Courses/List.vue';
+
 import AdminTeachersList from './views/Admin/Teachers/List.vue';
+import AdminTeachersDetail from './views/Admin/Teachers/Detail.vue';
+
 import AdminStudentDetail from './views/Admin/Students/Detail.vue';
 import AdminStudentsList from './views/Admin/Students/List.vue';
+
+import AdminCoursesList from './views/Admin/Courses/List.vue';
 import AdminCoursesNew from './views/Admin/Courses/New.vue';
 import AdminCourseDetail from './views/Admin/Courses/Detail.vue';
 
@@ -72,6 +76,11 @@ const router = new Router({
           path: 'teachers',
           name: 'teachers-list',
           component: AdminTeachersList,
+        },
+        {
+          path: 'teachers/:id',
+          name: 'teacher-detail',
+          component: AdminTeachersDetail,
         },
         {
           path: 'students',

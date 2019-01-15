@@ -14,7 +14,7 @@
           <td>{{ translations.ID }}</td>
           <td>{{ translations.FULL_NAME }}</td>
           <td>{{ translations.FORM_EMAIL }}</td>
-          <td>{{ translations.ROLE }}</td>
+          <td class="center">{{ translations.ROLE }}</td>
         </tr>
       </thead>
       <tr v-for="(user, index) in users" :key="index">
@@ -118,43 +118,6 @@ export default {
         color: #fff;
         &:hover {
           cursor: pointer;
-        }
-      }
-    }
-
-    > table {
-      width: 100%;
-      margin: 10px 0;
-      border-collapse: collapse;
-
-      > thead {
-        color: rgba($flatBlack, .4);
-        background-color: #efefef;
-        font-weight: 500;
-      }
-
-      td {
-        padding: 10px 30px
-      }
-
-      > tr {
-        &:nth-child(odd) {
-          background-color: #f4f4f4;
-        }
-        &:nth-child(even) {
-          background-color: #fff;
-        }
-        &:hover {
-          background-color: #f2f2f2;
-          cursor: pointer;
-        }
-
-        td {
-          text-align: left;
-
-          &.center {
-            @include d-flex-centered(center);
-          }
         }
       }
     }
