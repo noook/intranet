@@ -82,6 +82,33 @@ class UserRepository extends ServiceEntityRepository
         return $ids;
     }
 
+    public function findLike($query, $role = 'all')
+    {
+        $role = "ROLE_" . strtoupper($role);
+        $query = '%' . implode('%', str_split(strtolower($query))) . '%';
+
+        $userMapping = new ResultSetMapping;
+        $userMapping->addEntityResult(User::class, 'u');
+        $userMapping->addFieldResult('u', 'id', 'id');
+
+        $likePart = "unaccent(lower(first_name || ' ' || last_name)) LIKE '$query' LIMIT 3;";
+
+        if ($role == 'ROLE_ALL') {
+            $query = "SELECT id FROM \"user\" WHERE $likePart";
+        } else {
+            $query = "SELECT id FROM \"user\" WHERE '\"$role\"' = ANY (ARRAY(select * from json_array_elements(roles))::text[]) AND $likePart";
+        }
+
+        $em = $this->getEntityManager();
+        $results = $em->createNativeQuery($query, $userMapping)->getResult();
+        $ids = array_map(function ($user) {
+            return $user->getId();
+        }, $results);
+        $em->clear();
+        
+        return $this->findBy(['id' => $ids]);
+    }
+
     public function findStudents()
     {
         $ids = array_values($this->findStudentsIds());

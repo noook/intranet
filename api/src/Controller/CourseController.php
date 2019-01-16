@@ -12,6 +12,7 @@ use App\Entity\Course;
 
 use App\Repository\CourseRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\Repository\UserRepository;
 
 class CourseController extends AbstractController
 {
@@ -120,6 +121,25 @@ class CourseController extends AbstractController
             'course' => $course->repr(),
             'participating' => $participating,
             'grades' => $grades,
+        ]);
+    }
+
+    /**
+     * @Route("/courses/{id}/assign", name="course-assign-teacher", methods={"PUT"})
+     * @ParamConverter("course", class="App\Entity\Course")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function assignTeacher(Course $course, Request $request, UserRepository $userRepository, ObjectManager $em)
+    {
+        $teacherId = json_decode($request->getContent(), true)['teacher'];
+        $teacher = $userRepository->find($teacherId);
+    
+        $course->setTeacher($teacher);
+
+        $em->flush();
+    
+        return $this->json([
+            'course' => $course->repr(),
         ]);
     }
 }

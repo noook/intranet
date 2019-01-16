@@ -79,6 +79,24 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/users/search", name="users-search", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function searchUser(Request $request, UserRepository $userRepository)
+    {
+        $teachers = [];
+        $query = iconv('utf-8','ASCII//IGNORE', urldecode($request->query->get('query')));
+
+        foreach ($userRepository->findLike($query, $request->query->get('type')) as $teacher) {
+            $teachers[] = $teacher->repr();
+        }
+
+        return $this->json([
+            'teachers' => $teachers,
+        ]);
+    }
+
+    /**
      * @Route("/users/{id}", name="student-detail", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_TEACHER')")
      */

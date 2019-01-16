@@ -49,7 +49,7 @@ class Course
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'teacher' => $this->getTeacher()->repr(),
+            'teacher' => $this->getTeacher() ? $this->getTeacher()->repr() : null,
             'count' => count($this->getParticipants()),
         ];
     }
