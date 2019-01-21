@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "ssh root@server.neilrichter.com 'source ~/.zshrc; cd /var/www/nook/intranet; git pull origin master; cd client; npm i; npm run build; cd ../api; composer install'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
