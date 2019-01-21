@@ -38,18 +38,21 @@ export default {
       return `${user['first-name']} ${user['last-name']}`;
     },
     goToStudent(id) {
-      this.$router.push({
-        name: 'student-detail',
-        params: {
-          id,
-        },
-      });
+      if (this.$store.getters.isAdmin) {
+        this.$router.push({
+          name: 'student-detail',
+          params: {
+            id,
+          },
+        });
+      }
     },
   },
   computed: {
     showClasses() {
       const disabled = [
         'course-detail',
+        'teacher-course-detail',
       ];
 
       return !disabled.includes(this.$route.name);

@@ -4,14 +4,14 @@
       <thead>
         <tr>
           <td v-if="showName">{{ translations.FULL_NAME }}</td>
-          <td>{{ translations.COURSE }}</td>
+          <td v-if="showCourse">{{ translations.COURSE }}</td>
           <td>{{ translations.GRADE }}</td>
           <td>{{ translations.COMMENT }}</td>
         </tr>
       </thead>
       <tr v-for="(grade, index) in grades" :key="index">
         <td v-if="showName">{{ fullName(grade.student) }}</td>
-        <td>{{ grade.course.name }}</td>
+        <td v-if="showCourse">{{ grade.course.name }}</td>
         <td>{{ grade.value }}</td>
         <td>{{ grade.comment }}</td>
       </tr>
@@ -39,6 +39,13 @@ export default {
     showName() {
       const disabled = [
         'student-detail',
+      ];
+
+      return !disabled.includes(this.$route.name);
+    },
+    showCourse() {
+      const disabled = [
+        'teacher-course-detail',
       ];
 
       return !disabled.includes(this.$route.name);

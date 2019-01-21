@@ -52,9 +52,16 @@ export default {
       return `${user['first-name']} ${user['last-name']}`;
     },
     goToCourse(course) {
-      if (!this.$store.getters.isStudent) {
+      if (this.$store.getters.isAdmin) {
         this.$router.push({
           name: 'course-detail',
+          params: {
+            id: course.id,
+          },
+        });
+      } else if (this.$store.getters.isTeacher) {
+        this.$router.push({
+          name: 'teacher-course-detail',
           params: {
             id: course.id,
           },
@@ -74,6 +81,7 @@ export default {
     showTeacher() {
       const disabled = [
         'teacher-detail',
+        'teacher-panel',
       ];
 
       return !disabled.includes(this.$route.name);

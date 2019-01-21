@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     AUTH_TOKEN: localStorage.getItem('AUTH_TOKEN') || null,
     USER: localStorage.getItem('USER') || null,
-    ROLES: [],
+    ROLES: localStorage.getItem('ROLES') || [],
   },
   getters: {
     isAdmin(state) {
@@ -31,14 +31,17 @@ export default new Vuex.Store({
     },
     SET_USER(state, data) {
       localStorage.setItem('USER', data.user.email);
+      localStorage.setItem('ROLES', data.user.roles);
       Vue.set(state, 'USER', data.user.email);
       Vue.set(state, 'ROLES', data.user.roles);
     },
     LOGOUT(state) {
       Vue.delete(state, 'AUTH_TOKEN');
       Vue.delete(state, 'USER');
+      Vue.delete(state, 'ROLES');
       localStorage.removeItem('AUTH_TOKEN');
       localStorage.removeItem('USER');
+      localStorage.removeItem('ROLES');
     },
   },
   actions: {

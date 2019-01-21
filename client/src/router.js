@@ -5,7 +5,8 @@ import { checkConnection } from './utils/api';
 
 import Home from './views/Home.vue';
 import Authentication from './views/Authentication.vue';
-import AdminPanel from './views/Admin/Admin.vue';
+import AdminPanel from './views/Admin/Panel.vue';
+import TeacherPanel from './views/Teacher/Panel.vue';
 import AdminUserList from './views/Admin/Users/List.vue';
 
 import AdminTeachersList from './views/Admin/Teachers/List.vue';
@@ -17,6 +18,7 @@ import AdminStudentsList from './views/Admin/Students/List.vue';
 import AdminCoursesList from './views/Admin/Courses/List.vue';
 import AdminCoursesNew from './views/Admin/Courses/New.vue';
 import AdminCourseDetail from './views/Admin/Courses/Detail.vue';
+import TeacherCourseDetail from './views/Teacher/CourseDetail.vue';
 
 import CoursesList from './views/Courses/List.vue';
 
@@ -46,6 +48,16 @@ const router = new Router({
         }
         next();
       },
+    },
+    {
+      path: '/teacher',
+      name: 'teacher-panel',
+      component: TeacherPanel,
+    },
+    {
+      path: '/teacher/courses/:id',
+      name: 'teacher-course-detail',
+      component: TeacherCourseDetail,
     },
     {
       path: '/admin',

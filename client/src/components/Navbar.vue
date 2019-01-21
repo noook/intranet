@@ -7,6 +7,9 @@
       v-if="loggedAs && $store.getters.isAdmin"
       to="/admin">{{ translations.MANAGE }}</router-link>
     <router-link
+      v-if="loggedAs && $store.getters.isTeacher"
+      to="/teacher">{{ translations.COURSES }}</router-link>
+    <router-link
       v-if="loggedAs && $store.getters.isStudent"
       to="/courses">{{ translations.COURSES }}</router-link>
 
