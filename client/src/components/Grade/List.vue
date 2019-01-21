@@ -39,6 +39,7 @@ export default {
     showName() {
       const disabled = [
         'student-detail',
+        'student-grades-list',
       ];
 
       return !disabled.includes(this.$route.name);
