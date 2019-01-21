@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use App\Entity\Course;
+use App\Entity\Grade;
 
 use App\Repository\CourseRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -140,6 +141,31 @@ class CourseController extends AbstractController
     
         return $this->json([
             'course' => $course->repr(),
+        ]);
+    }
+
+    /**
+     * @Route("/courses/{id}/grade", name="course-new-grade", methods={"POST"})
+     * @ParamConverter("course", class="App\Entity\Course")
+     * @IsGranted("ROLE_TEACHER")
+     */
+    public function newGrade(Course $course, Request $request, UserRepository $userRepository, ObjectManager $em)
+    {
+        $data = json_decode($request->getContent(), true)['grade'];
+        $student = $userRepository->find($data['student']);
+
+        $grade = new Grade;
+        $grade
+            ->setStudent($student)
+            ->setCourse($course)
+            ->setValue($data['value'])
+            ->setComment($data['comment']);
+        
+        $em->persist($grade);
+        $em->flush();
+    
+        return $this->json([
+            'grade' => $grade->repr(),
         ]);
     }
 }

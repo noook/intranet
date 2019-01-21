@@ -16,6 +16,9 @@
       </ul>
     </section>
     <section v-if="loaded" class="lists">
+      <div class="grade-actions" v-if="selected === 'grades'">
+        <div class="grade-button" @click="gradeStudent">{{ translations.GRADE_ACTION }}</div>
+      </div>
       <StudentList v-if="selected === 'students'" :students="students" />
       <GradeList v-if="selected === 'grades'" :grades="grades" />
     </section>
@@ -38,7 +41,7 @@ export default {
       grades: [],
       course: null,
       students: [],
-      selected: 'students',
+      selected: this.$route.params.action || 'students',
       loaded: false,
     };
   },
@@ -51,6 +54,16 @@ export default {
     this.students = students;
     this.grades = grades;
     this.loaded = true;
+  },
+  methods: {
+    gradeStudent() {
+      this.$router.push({
+        name: 'teacher-grade-action',
+        params: {
+          id: this.$route.params.id,
+        },
+      });
+    },
   },
 };
 </script>
@@ -74,6 +87,7 @@ export default {
     }
 
     > section {
+
       &.tabs {
         > ul {
           @include d-flex-centered(flex-start);
@@ -90,6 +104,23 @@ export default {
               color: $flatBlue;
               text-decoration: underline;
             }
+          }
+        }
+      }
+
+      > .grade-actions {
+        @include d-flex-centered(flex-start);
+
+        > .grade-button {
+          display: inline;
+          padding: 5px 10px;
+          background-color: rgba($flatGreen, .9);
+          color: #fff;
+          border-radius: 5px;
+          margin: 10px 0;
+
+          &:hover {
+            cursor: pointer;
           }
         }
       }
