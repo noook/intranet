@@ -66,7 +66,7 @@ export default {
       await this.$api.post(`/courses/${this.$route.params.id}/grade`, {
         grade: {
           ...this.selected,
-          value: parseInt(this.selected.value, 10),
+          value: parseFloat(this.selected.value),
         },
       })
         .then(({ data }) => data)
