@@ -12,6 +12,9 @@
     <router-link
       v-if="loggedAs && $store.getters.isStudent"
       to="/courses">{{ translations.COURSES }}</router-link>
+    <router-link
+      v-if="loggedAs && $store.getters.isStudent"
+      to="/grades">{{ translations.GRADES }}</router-link>
 
     <p v-if="loggedAs">{{ loggedAs }}</p>
     <a @click="logout" v-if="loggedAs">{{ translations.LOGOUT }}</a>

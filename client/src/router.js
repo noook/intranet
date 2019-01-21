@@ -5,6 +5,9 @@ import { checkConnection } from './utils/api';
 
 import Home from './views/Home.vue';
 import Authentication from './views/Authentication.vue';
+
+import StudentGrades from './views/Student/Grades.vue';
+
 import AdminPanel from './views/Admin/Panel.vue';
 import TeacherPanel from './views/Teacher/Panel.vue';
 import AdminUserList from './views/Admin/Users/List.vue';
@@ -50,6 +53,11 @@ const router = new Router({
         }
         next();
       },
+    },
+    {
+      path: '/grades',
+      name: 'student-grades-list',
+      component: StudentGrades,
     },
     {
       path: '/teacher',
