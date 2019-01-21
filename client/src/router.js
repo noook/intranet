@@ -20,6 +20,8 @@ import AdminCoursesNew from './views/Admin/Courses/New.vue';
 import AdminCourseDetail from './views/Admin/Courses/Detail.vue';
 import TeacherCourseDetail from './views/Teacher/CourseDetail.vue';
 
+import TeacherGradeAction from './views/Teacher/GradeAction.vue';
+
 import CoursesList from './views/Courses/List.vue';
 
 Vue.use(Router);
@@ -58,6 +60,11 @@ const router = new Router({
       path: '/teacher/courses/:id',
       name: 'teacher-course-detail',
       component: TeacherCourseDetail,
+    },
+    {
+      path: '/teacher/courses/:id/grade',
+      name: 'teacher-grade-action',
+      component: TeacherGradeAction,
     },
     {
       path: '/admin',
