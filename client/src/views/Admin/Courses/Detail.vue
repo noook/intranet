@@ -39,20 +39,9 @@
       <StudentList
         :students="participating"
         v-if="tab === 'students'"/>
-      <table v-if="tab === 'grades'">
-        <thead>
-          <tr>
-            <td>{{ translations.FULL_NAME }}</td>
-            <td>{{ translations.GRADE }}</td>
-            <td>{{ translations.COMMENT }}</td>
-          </tr>
-        </thead>
-        <tr v-for="(grade, index) in grades" :key="index">
-          <td>{{ fullName(grade.student) }}</td>
-          <td>{{ grade.value }}</td>
-          <td>{{ grade.comment }}</td>
-        </tr>
-      </table>
+      <GradeList
+        :grades="grades"
+        v-if="tab === 'grades'" />
     </section>
     <img v-else src="@/assets/svg/loading.svg" alt="Loading">
   </div>
@@ -60,12 +49,14 @@
 
 <script>
 import StudentList from '@/components/Student/List.vue';
+import GradeList from '@/components/Grade/List.vue';
 import UserSearch from '@/components/Input/UserSearch.vue';
 
 export default {
   name: 'CourseDetail',
   components: {
     StudentList,
+    GradeList,
     UserSearch,
   },
   data() {
@@ -76,7 +67,7 @@ export default {
       course: null,
       participating: [],
       grades: [],
-      tab: 'students',
+      tab: this.$route.params.action || 'students',
     };
   },
   async created() {

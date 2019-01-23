@@ -32,4 +32,4 @@ I'm on Postgresql, version 10.5, I guess you can any similar version, but it wor
 
 ### Web server configuration
 
-I'm using nginx, and you can ask me at [me@neilrichter.com](mailto:me@neilrichter.com) for the webserver configuration.
+I'm using nginx, and you can ask me at [me@neilrichter.com](mailto:me@neilrichter.com) for the webserver configuration. 

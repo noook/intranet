@@ -26,7 +26,7 @@ export default {
           this.$router.push({
             name: 'course-detail',
             params: {
-              id: data.id,
+              id: data.course.id,
             },
           });
         })
