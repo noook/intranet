@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use App\Entity\User;
 use App\Entity\Course;
 use App\Entity\Grade;
 
@@ -75,6 +76,42 @@ class CourseController extends AbstractController
         return $this->json([
             'enrolled' => $user->getCourses()->contains($course),
             'updated' => $course->repr(),
+        ]);
+    }
+
+    /**
+     * @Route("/students/courses/{course}/participating/{student}", name="admin-assign-student-course", methods={"PUT"})
+     * @ParamConverter("course", options={"id" = "course"})
+     * @ParamConverter("student", options={"id" = "student"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function adminUpdateStudentParticipating(Course $course, User $student, Request $request, ObjectManager $em)
+    {
+        $action = json_decode($request->getContent(), true)['action'];
+        
+        switch ($action) {
+            case 'add':
+                $student->addCourse($course);
+                break;
+            
+            case 'remove':
+                $student->removeCourse($course);
+                break;
+
+            default:
+                break;
+        }
+
+        $em->flush();
+
+        $participating = [];
+
+        foreach ($course->getParticipants() as $participant) {
+            $participating[] = $participant->repr();
+        }
+
+        return $this->json([
+            'participating' => $participating,
         ]);
     }
 

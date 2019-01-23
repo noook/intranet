@@ -31,6 +31,11 @@
             :class="{active: tab === 'grades'}">{{ translations.GRADES }}</li>
         </ul>
       </div>
+      <div v-if="tab === 'students'" class="manage-students">
+        <div
+          @click="manageCourse"
+          class="button">{{ translations.MANAGE }}</div>
+      </div>
       <StudentList
         :students="participating"
         v-if="tab === 'students'"/>
@@ -67,6 +72,7 @@ export default {
     return {
       loaded: false,
       assigning: false,
+      assigningStudent: false,
       course: null,
       participating: [],
       grades: [],
@@ -96,6 +102,14 @@ export default {
       this.assigning = false;
       this.course = course;
     },
+    manageCourse() {
+      this.$router.push({
+        name: 'course-student-manage',
+        params: {
+          id: this.$route.params.id,
+        },
+      });
+    },
   },
 };
 </script>
@@ -110,6 +124,21 @@ export default {
     }
 
     > section {
+      > .manage-students {
+        margin: 10px 0;
+        @include d-flex-centered(flex-start);
+
+        > .button {
+          padding: 5px 10px;
+          border-radius: 5px;
+          color: #fff;
+          background-color: rgba($flatRed, .9);
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
       > .header {
         > p {
           font-size: 1.2rem;

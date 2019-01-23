@@ -21,6 +21,7 @@ import AdminStudentsList from './views/Admin/Students/List.vue';
 import AdminCoursesList from './views/Admin/Courses/List.vue';
 import AdminCoursesNew from './views/Admin/Courses/New.vue';
 import AdminCourseDetail from './views/Admin/Courses/Detail.vue';
+import AdminCourseManage from './views/Admin/Courses/ManageStudents.vue';
 import TeacherCourseDetail from './views/Teacher/CourseDetail.vue';
 
 import TeacherGradeAction from './views/Teacher/GradeAction.vue';
@@ -120,6 +121,11 @@ const router = new Router({
           component: AdminStudentDetail,
         },
       ],
+    },
+    {
+      name: 'course-student-manage',
+      path: '/admin/course/:id/manage',
+      component: AdminCourseManage,
     },
   ],
 });
