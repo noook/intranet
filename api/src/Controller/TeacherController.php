@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -37,6 +38,9 @@ class TeacherController extends AbstractController
      */
     public function teacherCourses(Course $course)
     {
+        if (!$this->getUser()->getClasses()->contains($course)) {
+            throw new AccessDeniedHttpException;
+        }
         $students = [];
         $grades = [];
 

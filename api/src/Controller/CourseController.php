@@ -14,6 +14,7 @@ use App\Entity\Grade;
 use App\Repository\CourseRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CourseController extends AbstractController
 {
@@ -103,10 +104,16 @@ class CourseController extends AbstractController
     /**
      * @Route("/courses/{id}", name="course-detail", methods={"GET"})
      * @ParamConverter("course", class="App\Entity\Course")
-     * @IsGranted("ROLE_STUDENT")
+     * @IsGranted("ROLE_TEACHER")
      */
     public function courseDetail(Course $course)
     {
+        $user = $this->getUser();
+        if (in_array('ROLE_TEACHER', $user->getRoles())) {
+            if (!$user->getClasses()->contains($course)) {
+                throw new AccessDeniedHttpException;
+            }
+        }
         $participating = [];
         $grades = [];
     
@@ -151,6 +158,13 @@ class CourseController extends AbstractController
      */
     public function newGrade(Course $course, Request $request, UserRepository $userRepository, ObjectManager $em)
     {
+        $user = $this->getUser();
+        if (in_array('ROLE_TEACHER', $user->getRoles())) {
+            if (!$user->getClasses()->contains($course)) {
+                throw new AccessDeniedHttpException;
+            }
+        }
+        
         $data = json_decode($request->getContent(), true)['grade'];
         $student = $userRepository->find($data['student']);
 
