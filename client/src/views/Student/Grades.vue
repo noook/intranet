@@ -1,7 +1,7 @@
 <template>
   <div class="student-grades-list">
     <h1>{{ translations.COURSES }}</h1>
-    <p>{{ translations.AVERAGE }}: {{ calcAverage }} / 20</p>
+    <p v-if="grades.length">{{ translations.AVERAGE }}: {{ calcAverage }} / 20</p>
     <GradesList :grades="sortGrades"/>
   </div>
 </template>
