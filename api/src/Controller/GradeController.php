@@ -43,7 +43,6 @@ class GradeController extends AbstractController
     public function gradeEdition(Grade $grade, Request $request, ObjectManager $em)
     {
         $data = json_decode($request->getContent(), true);
-        dump($data);
 
         $grade
             ->setValue($data['value'])
